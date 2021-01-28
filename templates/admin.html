@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}用户详情{% end %}
+{% block title %}User details{% end %}
 
 {% block script %}
 {% end %}
@@ -11,23 +11,23 @@
 {% block content %}
 <div class="container">
     <div style="margin: 10px 0px">
-        接口 <a href="/api/v1/admins">/api/v1/admins</a>
+        API <a href="/api/v1/admins">/api/v1/admins</a>
     </div>
     <div>
         <form class="form-inline" @submit.prevent="addAdmin">
             <div class="form-group">
-                <label style="margin-right: 1em">用户邮箱</label>
+                <label style="margin-right: 1em">Email user</label>
                 <input style="margin-right: 1em" v-model="formEmail" placeholder="email ..." class="form-control">
-                <button class="btn btn-success">新增管理员</button>
+                <button class="btn btn-success">Add a admin</button>
             </div>
         </form>
         <br>
         <table class="table">
             <thead>
                 <tr>
-                    <th>邮箱</th>
-                    <th>用户名</th>
-                    <th>上次登录时间</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Last login time</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@
                             })
                         }).then(ret => {
                             console.log(ret)
-                            this.$message("添加成功")
+                            this.$message("Thêm thành công")
                         })
                     }
                 }

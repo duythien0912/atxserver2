@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}设备列表{% end %}
+{% block title %}Device List{% end %}
 {%block nav_container_class%}
 class="container-fluid"
 {%end%}
@@ -34,7 +34,7 @@ class="container-fluid"
 {% block content %}
 <div class="container-fluid">
     <span onclick="location.reload()">
-        <el-alert v-if="websocketDisconnected" title="WebSocket连接断开，点击或F5刷新重连" type="error">
+        <el-alert v-if="websocketDisconnected" title="WebSocket connection is disconnected, click or F5 refresh to reconnect" type="error">
         </el-alert>
     </span>
     <div class="row">
@@ -42,51 +42,51 @@ class="container-fluid"
             <div class="card  border-light">
                 <div class="card-body">
                     <div>
-                        <!-- <el-checkbox size="mini" v-model="filters.private"><i class="fas fa-lock"></i> 私有设备
+                        <!-- <el-checkbox size="mini" v-model="filters.private"><i class="fas fa-lock"></i> Private equipment
                         </el-checkbox> -->
                     </div>
                     <div>
                         <el-checkbox size="mini" v-model="filters.platform.android">
-                            <i class="fab fa-android"></i> 安卓 <small>{{!counts.android}}</small>
+                            <i class="fab fa-android"></i> Android <small>{{!counts.android}}</small>
                         </el-checkbox>
                         <el-checkbox size="mini" v-model="filters.platform.apple">
-                            <i class="fab fa-apple"></i> 苹果 <small>{{!counts.apple}}</el-checkbox>
+                            <i class="fab fa-apple"></i> apple <small>{{!counts.apple}}</el-checkbox>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <el-table :data="tableData">
+    <el-table :data="tableData" slot="empty" empty-text="No Devices">
         <!-- <el-table-column prop="udid" label="UDID"></el-table-column> -->
-        <el-table-column label="操作">
+        <el-table-column label="Operating">
             <template slot-scope="scope">
                 <template v-if='"offline" == scope.row.status'>
-                    <el-button size="mini" disabled>设备离线</el-button>
+                    <el-button size="mini" disabled>Device offline</el-button>
                 </template>
                 <template v-else-if='"colding" == scope.row.status'>
-                    <el-button disabled :loading="true" size="mini" type="primary">释放中</span>
+                    <el-button disabled :loading="true" size="mini" type="primary">Releasing</span>
                 </template>
                 <template v-else-if='"busy" == scope.row.status'>
                     <el-button :title="scope.row.userId" style="cursor: not-allowed; background: #f3d19e" size="mini"
                         type="warning">
                         <span @dblclick.alt="deviceRelease(scope.row.udid)">
-                            <i class="fas fa-lock color-yellow" v-show="scope.row.private"></i> 已被占用
+                            <i class="fas fa-lock color-yellow" v-show="scope.row.private"></i> Already occupied
                         </span>
                     </el-button>
                 </template>
                 <template v-else-if='"stop using" == scope.row.status'>
-                    <el-button @click="deviceRelease(scope.row.udid)" size="mini" type="danger">停用</el-button>
+                    <el-button @click="deviceRelease(scope.row.udid)" size="mini" type="danger">Deactivate</el-button>
                 </template>
                 <template v-else>
                     <a :href='"/devices/"+scope.row.udid+"/remotecontrol"' target="_blank">
                         <el-button size="mini">
-                            <span style="color: blue">点击使用</span>
+                            <span style="color: blue">Click to use</span>
                         </el-button>
                     </a>
                 </template>
             </template>
         </el-table-column>
-        <el-table-column label="设备编号">
+        <el-table-column label="Device ID">
             <template slot-scope="scope">
                 <template v-if="scope.row.status == 'stop using'">
                     <a style="font-family: 'Courier New'" :title="scope.row.prop_serial || scope.row.udid"
@@ -101,7 +101,7 @@ class="container-fluid"
             </template>
         </el-table-column>
         <!-- <el-table-column prop="platform" label="类型"></el-table-column> -->
-        <el-table-column label="设备名" prop="prop_name">
+        <el-table-column label="Equipment name" prop="prop_name">
             <template slot-scope="scope">
                 <template v-if="!!scope.row.owner">
                     <i v-if="scope.row.owner==user.email" class="fas fa-lock color-yellow"></i>
@@ -114,14 +114,14 @@ class="container-fluid"
             </template>
         </el-table-column>
 
-        <el-table-column label="型号">
+        <el-table-column label="Model">
             <template slot-scope="scope">
                 <span v-text="scope.row.properties.product || scope.row.properties.model"></span>
             </template>
         </el-table-column>
-        <el-table-column prop="prop_brand" sortable label="品牌"></el-table-column>
+        <el-table-column prop="prop_brand" sortable label="Brand"></el-table-column>
 
-        <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="资产编号">
+        <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="Asset Number">
             <template slot-scope="scope">
                 <!-- <el-input size="mini"></el-input> -->
                 <atx-edit-inline :readonly="!user.admin" :value="scope.row.prop_propertyId"
@@ -131,7 +131,7 @@ class="container-fluid"
             </template>
         </el-table-column>
 
-       <el-table-column :sort-method="tableSortBy('department')" sortable label="所属部门">
+       <el-table-column :sort-method="tableSortBy('department')" sortable label="Department">
             <template slot-scope="scope">
                 <!-- <el-input size="mini"></el-input> -->
                 <atx-edit-inline :readonly="!user.admin" :value="scope.row.department"
@@ -143,7 +143,7 @@ class="container-fluid"
 
         <!-- <el-table-column prop="prop_brand" label="品牌"></el-table-column> -->
         <el-table-column prop="prop_version" sortable :sort-method="semverCompare" label="Version"></el-table-column>
-        <el-table-column sortable :sort-method="tableSortBy('usingDuration')" label="使用时长">
+        <el-table-column sortable :sort-method="tableSortBy('usingDuration')" label="Use time">
             <template slot-scope="scope">
                 {{!scope.row.usingDuration | formatDuration}}
             </template>

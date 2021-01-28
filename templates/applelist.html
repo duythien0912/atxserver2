@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}苹果设备列表{% end %}
+{% block title %}Apple device list{% end %}
 
 {% block script %}
 {% end %}
@@ -20,7 +20,7 @@
 {% block content %}
 <div class="container">
     <span onclick="location.reload()">
-        <el-alert v-if="websocketDisconnected" title="WebSocket连接断开，点击或F5刷新重连" type="error">
+        <el-alert v-if="websocketDisconnected" title="WebSocket connection is disconnected, click or F5 refresh to reconnect" type="error">
         </el-alert>
     </span>
     <el-table :data="tableData">

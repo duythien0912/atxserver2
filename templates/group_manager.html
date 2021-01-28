@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}创建新组{% end %}
+{% block title %}Create new group{% end %}
 {% block navlinks %}
 <a class="nav-item nav-link active" href='/user/group_create'>
-    <i class="fas fa-users"></i> 创建新组
+    <i class="fas fa-users"></i> Create new group
 </a>
 {% end %}
 
@@ -17,14 +17,14 @@
         <div class="form-group">
             <label>GroupID</label>
             <input type="text" name="id" v-model="id" class="form-control" required>
-            <small class="form-text text-muted">建议全英文，不能包含@</small>
+            <small class="form-text text-muted">It is recommended to be in English, not including @</small>
         </div>
         <div class="form-group">
             <label>GroupName</label>
             <input type="text" name="name" v-model="name" class="form-control" required>
-            <small class="form-text text-muted">这个可以中文，目前仅作为描述字段</small>
+            <small class="form-text text-muted">This can be UTF8, currently only used as a description field</small>
         </div>
-        <button type="submit" class="btn btn-default btn-outline-primary">创建组</button>
+        <button type="submit" class="btn btn-default btn-outline-primary">Create group</button>
     </form>
 </div>
 {% end %}

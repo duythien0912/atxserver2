@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}用户详情{% end %}
+{% block title %}User details{% end %}
 
 {% block script %}
 {% end %}
@@ -19,7 +19,7 @@
 
 {% block navlinks %}
 <a href="/user" class="nav-item nav-link active">
-    <i class="fas fa-user"></i> 用户信息
+    <i class="fas fa-user"></i> User Info
 </a>
 {% end %}
 
@@ -38,7 +38,7 @@
             <label>Token</label>
             <input class="form-control form-control-sm" :value="token">
         </div>
-        <h4>接口使用方法
+        <h4>How to use the interface
             <a target="_blank" href="https://httpie.org/"><small>HTTPie</small></a></h4>
         <p>
             <code>http GET http://localhost:4000/api/v1/user Authorization:'Bearer <span v-text="token"></span>'</code>
@@ -46,11 +46,11 @@
     </div>
     <div>
         <hr>
-        <h4>组管理 <a href="/user/group_create"><small>创建组</small></a></h4>
+        <h4>Group management <a href="/user/group_create"><small>Create group</small></a></h4>
         <el-table :data="groups">
-            <el-table-column prop="id" label="名称"></el-table-column>
-            <el-table-column prop="name" label="备注"></el-table-column>
-            <el-table-column prop="admin" label="管理员">
+            <el-table-column prop="id" label="ID"></el-table-column>
+            <el-table-column prop="name" label="Name"></el-table-column>
+            <el-table-column prop="admin" label="Admin">
                 <template slot-scope="scope">
                     <span v-text="scope.row.admin ? 'true' : 'false'"></span>
                 </template>
