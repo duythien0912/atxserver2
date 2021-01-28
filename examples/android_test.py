@@ -12,7 +12,7 @@ from logzero import logger
 import uiautomator2 as u2
 
 server_url = "http://localhost:4000"
-token = "82d03bc6110145b2814e5e3c55bd8980"  # change to your token
+token = "2abd5c5fda8c460d9bc6e18a3270ecca"  # change to your token
 
 
 def make_url(path):
@@ -33,17 +33,19 @@ def request_api(path, method="GET", **kwargs):
 
 
 def main():
-    # 获取用户信息
+    logger.debug("Run android_test.py")
+
+    # Get user information
     ret = request_api("/api/v1/user")
     logger.info("User: %s", ret['username'])
 
-    # 获取可用设备列表
+    # Get a list of available devices
     ret = request_api("/api/v1/devices", params={"usable": "true"})
     if not ret['devices']:
         raise EnvironmentError("No devices")
     logger.info("Device count: %d", ret['count'])
 
-    # 占用设备
+    # Occupy equipment
     device = ret['devices'][0]
     udid = device['udid']
     logger.info("Choose device: \"%s\" udid=%s", device['properties']['name'],
@@ -54,12 +56,12 @@ def main():
     print(ret)
 
     try:
-        # 获取占用设备信息
+        # Get information about occupied equipment
         ret = request_api("/api/v1/user/devices/" + udid)
         source = ret['device']['source']
         pprint(source)
 
-        # 安装应用
+        # Install the app
         logger.info("install app")
         provider_url = source['url']
         ret = request_api(
@@ -72,7 +74,7 @@ def main():
             })
         pprint(ret)
 
-        # 运行测试
+        # Run test
         adb_remote_addr = source['remoteConnectAddress']
         subprocess.run(['adb', 'connect', adb_remote_addr])
         time.sleep(1)
@@ -84,7 +86,7 @@ def main():
         assert d(text="Alarm").wait()
 
     finally:
-        # 释放设备
+        # Release device
         ret = request_api("/api/v1/user/devices/" + udid, method="delete")
         print(ret)
 

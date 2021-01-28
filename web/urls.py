@@ -12,6 +12,7 @@ from .views.device import (AndroidDeviceControlHandler, APIDeviceHandler,
                            DeviceItemHandler, DeviceListHandler)
 from .views.group import (APIGroupUserListHandler, APIUserGroupListHandler,
                           UserGroupCreateHandler)
+from .views.testcase import (APITestExampleHandler)
 from .views.provider import ProviderHeartbeatWSHandler
 from .views.upload import UploadItemHandler, UploadListHandler
 from .views.user import (
@@ -55,4 +56,7 @@ urlpatterns = [
     # POST /api/v1/user/devices/{serial}/remoteConnect
     # DELETE /api/v1/user/devices/{serial}/remoteConnect
     # POST, GET /api/v1/user/devices/{serial}/shell
+
+    ## Test case API
+    (r"/api/v1/test/example", APITestExampleHandler), # GET
 ]

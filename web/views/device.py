@@ -218,7 +218,7 @@ class APIUserDeviceHandler(CorsMixin, AuthRequestHandler):
         """ acquire device """
         data = self.get_payload()
         udid = data["udid"]
-        idle_timeout = data.get('idleTimeout', 600)  # 默认10分钟
+        idle_timeout = data.get('idleTimeout', 600)  # 10 minutes by default
         email = self.current_user.email
 
         # Admin: change user email

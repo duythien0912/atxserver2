@@ -116,12 +116,12 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-      <span class="title">ATXServer2</span></a>
+      <span class="title">Neun System 1</span></a>
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <div class="navbar-nav">
         <a class="nav-item nav-link active" href="/">
-          <i class="fab fa-apple"></i> 苹果设备</a>
+          <i class="fab fa-apple"></i> Apple device</a>
         <!-- <a class="nav-item nav-link active" href='/'> -->
         <!-- </a> -->
       </div>
@@ -132,12 +132,12 @@
             {{current_user.email}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/user">用户信息</a>
+            <a class="dropdown-item" href="/user">User Info</a>
             <a class="dropdown-item" href="/logout">Logout</a>
           </div>
         </div>
         <form class="form-inline">
-          <button class="btn btn-warning" type="button" @click="stopUsing">停止使用</button>
+          <button class="btn btn-warning" type="button" @click="stopUsing">Stop using</button>
           <span ref="usingTime" class="navbar-text" style="margin-left: 1em">
             使用时长
           </span>

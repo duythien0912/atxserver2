@@ -27,6 +27,7 @@
                 <tr>
                     <th>Email</th>
                     <th>Username</th>
+                    <th>Token</th>
                     <th>Last login time</th>
                 </tr>
             </thead>
@@ -34,6 +35,7 @@
                 <tr v-for="u in users">
                     <td v-text="u.email"></td>
                     <td v-text="u.username"></td>
+                    <td v-text="u.token"></td>
                     <td v-text="u.lastLoggedInAt"></td>
                 </tr>
             </tbody>

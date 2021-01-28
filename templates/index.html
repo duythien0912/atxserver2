@@ -50,7 +50,13 @@ class="container-fluid"
                             <i class="fab fa-android"></i> Android <small>{{!counts.android}}</small>
                         </el-checkbox>
                         <el-checkbox size="mini" v-model="filters.platform.apple">
-                            <i class="fab fa-apple"></i> apple <small>{{!counts.apple}}</el-checkbox>
+                            <i class="fab fa-apple"></i> apple <small>{{!counts.apple}}
+                        </el-checkbox>
+                    </div>
+                    <div>
+                        <el-button @click="runExampleTest" size="mini" type="warning" plain>
+                            <span>Run Example Test</span>
+                        </el-button>
                     </div>
                 </div>
             </div>
@@ -67,8 +73,7 @@ class="container-fluid"
                     <el-button disabled :loading="true" size="mini" type="primary">Releasing</span>
                 </template>
                 <template v-else-if='"busy" == scope.row.status'>
-                    <el-button :title="scope.row.userId" style="cursor: not-allowed; background: #f3d19e" size="mini"
-                        type="warning">
+                    <el-button :title="scope.row.userId" style="cursor: not-allowed; background: #f3d19e" size="mini" type="warning">
                         <span @dblclick.alt="deviceRelease(scope.row.udid)">
                             <i class="fas fa-lock color-yellow" v-show="scope.row.private"></i> Already occupied
                         </span>
@@ -79,8 +84,8 @@ class="container-fluid"
                 </template>
                 <template v-else>
                     <a :href='"/devices/"+scope.row.udid+"/remotecontrol"' target="_blank">
-                        <el-button size="mini">
-                            <span style="color: blue">Click to use</span>
+                        <el-button size="mini" type="primary" plain>
+                            <span>Click to use</span>
                         </el-button>
                     </a>
                 </template>
@@ -90,8 +95,8 @@ class="container-fluid"
             <template slot-scope="scope">
                 <template v-if="scope.row.status == 'stop using'">
                     <a style="font-family: 'Courier New'" :title="scope.row.prop_serial || scope.row.udid"
-                        :href='"/devices/"+scope.row.udid+"/remotecontrol"'
-                        target="_blank">{{!(scope.row.prop_serial || scope.row.udid) | shortString}}</a>
+                        :href='"/devices/"+scope.row.udid+"/remotecontrol"' target="_blank">{{!(scope.row.prop_serial || scope.row.udid) |
+                        shortString}}</a>
                 </template>
                 <template v-else>
                     <span style="font-family: 'Courier New'" :title="scope.row.prop_serial || scope.row.udid">
@@ -124,18 +129,16 @@ class="container-fluid"
         <el-table-column :sort-method="tableSortBy('prop_propertyId')" sortable label="Asset Number">
             <template slot-scope="scope">
                 <!-- <el-input size="mini"></el-input> -->
-                <atx-edit-inline :readonly="!user.admin" :value="scope.row.prop_propertyId"
-                    @change="updatePropertyId(scope.row.udid, $event)">
+                <atx-edit-inline :readonly="!user.admin" :value="scope.row.prop_propertyId" @change="updatePropertyId(scope.row.udid, $event)">
                 </atx-edit-inline>
                 <!-- <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> -->
             </template>
         </el-table-column>
 
-       <el-table-column :sort-method="tableSortBy('department')" sortable label="Department">
+        <el-table-column :sort-method="tableSortBy('department')" sortable label="Department">
             <template slot-scope="scope">
                 <!-- <el-input size="mini"></el-input> -->
-                <atx-edit-inline :readonly="!user.admin" :value="scope.row.department"
-                    @change="updateDeviceDepartment(scope.row.udid, $event)">
+                <atx-edit-inline :readonly="!user.admin" :value="scope.row.department" @change="updateDeviceDepartment(scope.row.udid, $event)">
                 </atx-edit-inline>
                 <!-- <span v-text="prop_propertyId"></span> <i class="fas fa-edit cursor-pointer"></i> -->
             </template>
@@ -377,6 +380,13 @@ class="container-fluid"
                         $.ajax({
                             method: "delete",
                             url: "/api/v1/user/devices/" + udid,
+                            dataType: "json",
+                        })
+                    },
+                    runExampleTest() {
+                        $.ajax({
+                            method: "get",
+                            url: "/api/v1/test/example",
                             dataType: "json",
                         })
                     },
